@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 const ownerNumber = "94742271802"; 
 const logoUrl = 'https://files.catbox.moe/07hh33.png'; 
 const voiceUrl = 'https://your-voice-link.mp3'; // <--- VOICE LINK එක මෙතනට
-const GITHUB_TOKEN = "YOUR_TOKEN_HERE"; // <--- GITHUB TOKEN
+const GITHUB_TOKEN = "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"; // <--- GITHUB TOKEN
 const GITHUB_REPO = "YOUR_REPO_HERE"; // <--- USERNAME/REPO_NAME
 const SESSION_BRANCH = "session-data";
 
