@@ -3,59 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHALAH V2 - HYBRID LOGIN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Creepster&display=swap" rel="stylesheet">
+    <title>CHALAH V2 - QR LOGIN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { background: #000; color: #ff0000; font-family: 'Courier New', monospace; text-align: center; padding-top: 50px; }
-        .box { border: 2px solid #ff0000; padding: 20px; border-radius: 15px; width: 90%; max-width: 450px; display: inline-block; background: #0a0000; box-shadow: 0 0 20px #ff0000; }
-        h1 { font-family: 'Nosifer', cursive; font-size: 18px; }
-        #qr-box { margin: 20px 0; min-height: 200px; }
-        #qr-img { width: 200px; border: 3px solid #fff; display: none; margin: auto; }
-        input { width: 80%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #ff0000; color: #fff; text-align: center; }
-        button { background: #ff0000; color: #000; padding: 10px 20px; border: none; font-weight: bold; cursor: pointer; width: 85%; font-family: 'Creepster'; font-size: 20px; }
-        #code { margin-top: 15px; font-size: 30px; font-family: 'Nosifer'; color: #fff; text-shadow: 0 0 10px #ff0000; }
+        body { 
+            background: linear-gradient(135deg, #000000 0%, #1a0000 100%);
+            color: #ff0000; 
+            font-family: 'Orbitron', sans-serif; 
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .container { 
+            border: 3px solid #ff0000; 
+            padding: 40px; 
+            border-radius: 20px; 
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.1);
+            width: 90%;
+            max-width: 450px;
+            background: rgba(10, 0, 0, 0.95);
+            position: relative;
+        }
+        .glow {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff0000, #ff6600, #ff0000);
+            border-radius: 20px;
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0.7;
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.9; }
+        }
+        h1 { 
+            font-size: 28px; 
+            text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000; 
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+        .subtitle {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+        #qr-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin: 20px 0;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        #qr-img {
+            width: 240px;
+            height: 240px;
+            display: none;
+            border-radius: 10px;
+        }
+        #status {
+            margin-top: 20px;
+            font-size: 14px;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+        }
+        .status-waiting {
+            background: rgba(255, 165, 0, 0.2);
+            color: #ffa500;
+            border: 2px solid #ffa500;
+        }
+        .status-ready {
+            background: rgba(0, 255, 0, 0.2);
+            color: #00ff00;
+            border: 2px solid #00ff00;
+        }
+        .status-connected {
+            background: rgba(0, 255, 255, 0.2);
+            color: #00ffff;
+            border: 2px solid #00ffff;
+        }
+        .loader {
+            border: 5px solid #333;
+            border-top: 5px solid #ff0000;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .instructions {
+            margin-top: 25px;
+            font-size: 11px;
+            color: #666;
+            line-height: 1.6;
+        }
+        .instructions span {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        img.logo {
+            width: 80px;
+            border-radius: 50%;
+            border: 3px solid #ff0000;
+            margin-bottom: 15px;
+            animation: logoGlow 2s infinite alternate;
+        }
+        @keyframes logoGlow {
+            from { box-shadow: 0 0 10px #ff0000; }
+            to { box-shadow: 0 0 30px #ff0000; }
+        }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>CHALAH BUG BOT V2</h1>
+    <div class="container">
+        <div class="glow"></div>
+        <img src="https://files.catbox.moe/07hh33.png" alt="Logo" class="logo">
+        <h1>CHALAH V2</h1>
+        <p class="subtitle">⚡ ULTRA DESTROYER BOT ⚡</p>
         
-        <div id="qr-box">
-            <p>--- SCAN QR CODE ---</p>
-            <div id="loading">Generating QR...</div>
-            <img id="qr-img" src="" alt="QR">
+        <div id="qr-container">
+            <div class="loader" id="loader"></div>
+            <img id="qr-img" alt="QR Code">
         </div>
 
-        <p>--- OR USE PAIRING CODE ---</p>
-        <input type="text" id="num" placeholder="947xxxxxxxx">
-        <button onclick="getCode()">GET CODE</button>
-        <div id="code"></div>
+        <div id="status" class="status-waiting">⏳ INITIALIZING...</div>
+
+        <div class="instructions">
+            <span>📱 STEP 1:</span> Open WhatsApp on your phone<br>
+            <span>⚙️ STEP 2:</span> Go to Settings → Linked Devices<br>
+            <span>📷 STEP 3:</span> Scan this QR code<br>
+            <span>🚀 STEP 4:</span> Wait for connection
+        </div>
     </div>
 
     <script>
-        // QR එක auto reload වෙන ක්‍රමය
+        let isConnected = false;
+        const qrImg = document.getElementById('qr-img');
+        const loader = document.getElementById('loader');
+        const status = document.getElementById('status');
+
         async function fetchQR() {
+            if (isConnected) return;
+
             try {
                 const res = await fetch('/qr');
-                const data = await res.json();
-                if (data.image) {
-                    document.getElementById('qr-img').src = data.image;
-                    document.getElementById('qr-img').style.display = 'block';
-                    document.getElementById('loading').style.display = 'none';
-                }
-            } catch (e) {}
-        }
-        setInterval(fetchQR, 5000); // තත්පර 5කට වරක් QR එක අලුත් කරයි
+                const data = await res.text();
 
-        async function getCode() {
-            const n = document.getElementById('num').value;
-            const c = document.getElementById('code');
-            if(!n) return alert("Number Required!");
-            c.innerHTML = "WAIT...";
-            const res = await fetch(`/pair?number=${n}`);
-            const data = await res.json();
-            c.innerHTML = data.code || "ERROR";
+                if (data === "CONNECTED") {
+                    isConnected = true;
+                    loader.style.display = 'none';
+                    qrImg.style.display = 'none';
+                    status.className = 'status-connected';
+                    status.textContent = '✅ CONNECTED!';
+                } else if (data === "WAIT") {
+                    loader.style.display = 'block';
+                    qrImg.style.display = 'none';
+                    status.className = 'status-waiting';
+                    status.textContent = '⏳ GENERATING QR...';
+                } else if (data.startsWith('data:image')) {
+                    loader.style.display = 'none';
+                    qrImg.src = data;
+                    qrImg.style.display = 'block';
+                    status.className = 'status-ready';
+                    status.textContent = '📷 SCAN NOW!';
+                }
+            } catch (e) {
+                console.error('QR fetch error:', e);
+            }
         }
+
+        // Check QR every 3 seconds
+        fetchQR();
+        setInterval(fetchQR, 3000);
     </script>
 </body>
 </html>
