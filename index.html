@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHALAH V2 - LOGIN</title>
+    <style>
+        body { background: #000; color: #ff0000; font-family: sans-serif; text-align: center; padding: 20px; }
+        .container { border: 2px solid #f00; padding: 20px; border-radius: 15px; max-width: 400px; margin: auto; box-shadow: 0 0 20px #f00; }
+        img { width: 100%; max-width: 250px; border: 2px solid #fff; margin: 10px 0; }
+        input { width: 80%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #f00; color: #fff; text-align: center; }
+        button { background: #f00; color: #000; padding: 10px 20px; border: none; font-weight: bold; cursor: pointer; width: 85%; margin: 5px; }
+        #pairCode { font-size: 30px; color: #fff; margin-top: 15px; letter-spacing: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>CHALAH BUG BOT V2</h2>
+        <div id="qrArea">
+            <p>--- SCAN QR CODE ---</p>
+            <img id="qrImg" src="" alt="Wait for QR...">
+        </div>
+        <hr style="border: 0.5px solid #333;">
+        <div id="pairArea">
+            <p>--- OR USE PAIRING CODE ---</p>
+            <input type="text" id="num" placeholder="947xxxxxxxx">
+            <button onclick="getPair()">GET CODE</button>
+            <div id="pairCode"></div>
+        </div>
+    </div>
+    <script>
+        async function updateQR() {
+            const res = await fetch('/qr');
+            const data = await res.text();
+            if(data === "CONNECTED") document.getElementById('qrArea').innerHTML = "<h3>✅ CONNECTED!</h3>";
+            else if(data !== "WAIT") document.getElementById('qrImg').src = data;
+        }
+        setInterval(updateQR, 5000);
+
+        async function getPair() {
+            const n = document.getElementById('num').value;
+            const c = document.getElementById('pairCode');
+            if(!n) return alert("Enter Number!");
+            c.innerHTML = "WAIT...";
+            const res = await fetch(`/pair?number=${n}`);
+            const data = await res.json();
+            c.innerHTML = data.code || "ERROR";
+        }
+    </script>
+</body>
+</html>
