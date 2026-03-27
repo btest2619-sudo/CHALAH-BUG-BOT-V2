@@ -10,9 +10,9 @@ const port = process.env.PORT || 3000;
 // --- CONFIG ---
 const ownerNumber = "94742271802"; 
 const logoUrl = 'https://files.catbox.moe/07hh33.png'; 
-const voiceUrl = 'https://your-voice-link.mp3'; // <--- VOICE LINK එක මෙතනට
+const voiceUrl = 'https://files.catbox.moe/xk6low.mp4'; // <--- VOICE LINK එක මෙතනට
 const GITHUB_TOKEN = "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"; // <--- GITHUB TOKEN
-const GITHUB_REPO = "YOUR_REPO_HERE"; // <--- USERNAME/REPO_NAME
+const GITHUB_REPO = "btest2619-sudo/Database-Md"; // <--- USERNAME/REPO_NAME
 const SESSION_BRANCH = "session-data";
 
 let premiumUsers = [ownerNumber]; 
